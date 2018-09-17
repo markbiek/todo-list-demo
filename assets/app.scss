@@ -12,3 +12,27 @@ section {
     width: 80%;
     margin: 0 auto;
 }
+
+.input-group {
+    margin-bottom: 1.5em;
+
+    select,
+    input[type=text] {
+        background: #fff;
+        width: 250px;
+        height: 22px;
+    }
+
+    select {
+        border-radius: 0;
+        border-color: rgb(238, 238, 238);
+    }
+}
+
+.todo {
+    .delete-todo {
+        cursor: pointer;
+        color: red;
+        font-size: .85em;
+    }
+}

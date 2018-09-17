@@ -4,8 +4,11 @@ import { connect } from 'react-redux';
 import store from '../store';
 
 import {
+    actionAddList,
     actionSetSelectedList,
 } from '../modules/Todo/actions';
+
+import Todos from './Todos';
 
 const { dispatch } = store;
 
@@ -25,11 +28,22 @@ class TodoLists extends React.Component {
             <>
                 <div className="input-group">
                     <label htmlFor="list_name">New List</label><br />
-                    <input type="text" value={this.state.name} id="list_name" onChange={e => {
-                        this.setState({
-                            name: e.target.value
-                        });
-                    }} />
+                    <input type="text" value={this.state.name} id="list_name"
+                        onChange={e => {
+                            this.setState({
+                                name: e.target.value
+                            });
+                        }}
+                        onKeyPress={e => {
+                            if (e.key == 'Enter') {
+                                dispatch(actionAddList(this.state.name));
+                                dispatch(actionSetSelectedList(this.state.name));
+                                this.setState({
+                                    name: ''
+                                });
+                            }
+                        }}
+                    />
                 </div>
                 <div className="input-group">
                     <label htmlFor="lists">Select a List</label><br />
@@ -46,6 +60,8 @@ class TodoLists extends React.Component {
                         }
                     </select>
                 </div>
+
+                <Todos />
             </>
         );
     }

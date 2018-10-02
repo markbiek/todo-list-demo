@@ -54,7 +54,7 @@ class TodoLists extends React.Component {
                         {
                             lists.map((list, idx) => {
                                 return (
-                                    <option value={list.name} key={`list_${idx}`}>{list.name}</option>
+                                    <option value={list.id} key={`list_${idx}`}>{list.name}</option>
                                 )
                             })
                         }

@@ -13,6 +13,7 @@ export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const SET_API_TOKEN = 'SET_API_TOKEN';
 export const LOAD_TODO_LISTS = 'LOAD_TODO_LISTS';
 export const SET_TODO_LISTS = 'SET_TODO_LISTS';
+export const SET_LIST_TODOS = 'SET_LIST_TODOS';
 
 const API_URL = 'http://codetest.viastaging.com/api';
 
@@ -33,9 +34,15 @@ export const fetchTodoLists = () => {
     return apiGet('/lists');
 };
 
+export const fetchTodos = id => {
+    return apiGet(`/lists/${id}`);
+};
+
 export const apiGet = (route, opts = {}) => {
     const token = store.getState().todoState.get('meta').get('api_token');
     const url = `${API_URL}${route}?token=${token}`;
+
+    console.log(`apiGet: ${url}`);
 
     return axios.get(url, opts);
 };
@@ -56,9 +63,9 @@ export const actionAddList = name => ({
     name
 });
 
-export const actionSetSelectedList = name => ({
+export const actionSetSelectedList = id => ({
     type: SET_SELECTED_LIST,
-    name
+    id
 });
 
 export const actionDeleteTodo = (list, idx) => ({
@@ -75,7 +82,7 @@ export const actionAddTodo = (list, todo) => ({
 
 export const getList = (lists, selected) => {
     for (let i in lists) {
-        if (lists.hasOwnProperty(i) && lists[i].name == selected) {
+        if (lists.hasOwnProperty(i) && lists[i].id == selected) {
             return lists[i];
         }
     }

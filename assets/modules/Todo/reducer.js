@@ -1,6 +1,7 @@
 import { fromJS } from 'immutable';
 
 import {
+    SET_LIST_TODOS,
     SET_TODO_LISTS,
     ADD_LIST,
     SET_SELECTED_LIST,
@@ -55,9 +56,20 @@ export const todoReducer = function (state = todoInitialState, action) {
         case SET_SELECTED_LIST:
             return state.mergeDeep({
                 meta: {
-                    selected: action.name
+                    selected: action.id
                 }
             });
+
+        case SET_LIST_TODOS:
+        {
+            const { id, todos } = action;
+            let { lists } = state.toJS();
+
+            let list = getList(lists, id);
+            list.todos = todos;
+
+            return state.set('lists', fromJS(lists));
+        }
 
         case ADD_LIST:
         {

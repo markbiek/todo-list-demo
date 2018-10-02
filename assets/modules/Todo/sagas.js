@@ -2,15 +2,18 @@ import { fromJS } from 'immutable';
 import { put, takeEvery, call, all, select } from 'redux-saga/effects'
 
 import {
+    SET_LIST_TODOS,
     LOAD_TODO_LISTS,
     SET_TODO_LISTS,
     SET_API_TOKEN,
+    SET_SELECTED_LIST,
     LOGIN_START,
     LOGIN_IN_PROGRESS,
     LOGIN_SUCCESS,
     LOGIN_FAILED,
     fetchToken,
     fetchTodoLists,
+    fetchTodos,
 } from './actions';
 
 function* handleLogin(action) {
@@ -45,10 +48,26 @@ function* handleLoadTodoLists() {
     }
 }
 
+function* handleLoadTodos(action) {
+    try {
+        const resp = yield call(fetchTodos, action.id);
+
+        const { data: {data: { todos }} } = resp;
+
+        yield put({ type: SET_LIST_TODOS, todos, id: action.id });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 export function* watchLoginStart() {
     yield takeEvery(LOGIN_START, handleLogin);
 }
 
 export function* watchLoadLists() {
     yield takeEvery(LOAD_TODO_LISTS, handleLoadTodoLists);
+}
+
+export function* watchSetSelectedList() {
+    yield takeEvery(SET_SELECTED_LIST, handleLoadTodos);
 }

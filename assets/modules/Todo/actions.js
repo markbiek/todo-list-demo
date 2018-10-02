@@ -11,8 +11,12 @@ export const LOGIN_IN_PROGRESS = 'LOGIN_IN_PROGRESS';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const SET_API_TOKEN = 'SET_API_TOKEN';
+export const LOAD_TODO_LISTS = 'LOAD_TODO_LISTS';
+export const SET_TODO_LISTS = 'SET_TODO_LISTS';
 
 const API_URL = 'http://codetest.viastaging.com/api';
+
+import store from '../../store';
 
 export const fetchToken = action => {
     const url = `${API_URL}/auth/authenticate`;
@@ -23,6 +27,17 @@ export const fetchToken = action => {
         email: username,
         password,
     });
+};
+
+export const fetchTodoLists = () => {
+    return apiGet('/lists');
+};
+
+export const apiGet = (route, opts = {}) => {
+    const token = store.getState().todoState.get('meta').get('api_token');
+    const url = `${API_URL}${route}?token=${token}`;
+
+    return axios.get(url, opts);
 };
 
 export const actionSetApiToken = api_token => ({

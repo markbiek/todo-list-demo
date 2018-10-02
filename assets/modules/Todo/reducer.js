@@ -1,6 +1,7 @@
 import { fromJS } from 'immutable';
 
 import {
+    SET_TODO_LISTS,
     ADD_LIST,
     SET_SELECTED_LIST,
     DELETE_TODO,
@@ -23,18 +24,14 @@ const todoInitialState = fromJS({
         },
         api_token: null
     },
-    lists: [
-        {
-            name: 'Groceries',
-            todos: [
-                'Lettuce'
-            ]
-        }
-    ]
+    lists: []
 })
 
 export const todoReducer = function (state = todoInitialState, action) {
     switch (action.type) {
+        case SET_TODO_LISTS:
+            return state.set('lists', fromJS(action.lists));
+
         case LOGIN_START:
         case LOGIN_IN_PROGRESS:
         case LOGIN_FAILED:

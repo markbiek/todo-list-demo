@@ -87,11 +87,21 @@ export const todoReducer = function (state = todoInitialState, action) {
         case DELETE_TODO:
         {
             let { lists } = state.toJS();
-            const { list, idx} = action;
+            const { list, id} = action;
 
             let curList = getList(lists, list);
             if (curList) {
-                curList.todos.splice(idx, 1);
+                let idx = -1;
+                for (let i = 0; i < curList.todos.length; i++) {
+                    if (curList.todos[i].id == id) {
+                        idx = i;
+                        break;
+                    }
+                }
+
+                if (idx > 0) {
+                    curList.todos.splice(idx, 1);
+                }
             }
 
             return state.set('lists', fromJS(lists));

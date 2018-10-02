@@ -68,10 +68,10 @@ export const actionSetSelectedList = id => ({
     id
 });
 
-export const actionDeleteTodo = (list, idx) => ({
+export const actionDeleteTodo = (list, id) => ({
     type: DELETE_TODO,
     list,
-    idx
+    id,
 });
 
 export const actionAddTodo = (list, todo) => ({
@@ -82,7 +82,7 @@ export const actionAddTodo = (list, todo) => ({
 
 export const getList = (lists, selected) => {
     for (let i in lists) {
-        if (lists.hasOwnProperty(i) && lists[i].id == selected) {
+        if (lists.hasOwnProperty(i) && (lists[i].id == selected || lists[i].name == selected)) {
             return lists[i];
         }
     }

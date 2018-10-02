@@ -17,7 +17,7 @@ export default class Todo extends React.Component {
             <div className="todo">
                 {name}
                 <a className="delete-todo" onClick={e => {
-                    dispatch(actionDeleteTodo(list, idx));
+                    dispatch(actionDeleteTodo(list, id));
                 }}>[x]</a>
             </div>
         );

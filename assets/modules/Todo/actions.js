@@ -7,7 +7,22 @@ export const SET_SELECTED_LIST = 'SET_SELECTED_LIST';
 export const DELETE_TODO = 'DELETE_TODO';
 export const ADD_TODO = 'ADD_TODO';
 export const LOGIN_START = 'LOGIN_START';
+export const LOGIN_IN_PROGRESS = 'LOGIN_IN_PROGRESS';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const SET_API_TOKEN = 'SET_API_TOKEN';
+
+const API_URL = 'http://codetest.viastaging.com/api';
+
+export const fetchToken = action => {
+    const url = `${API_URL}/auth/authenticate`;
+    const { username, password } = action;
+
+    return axios.post(url, {
+        email: username,
+        password
+    });
+};
 
 export const actionSetApiToken = api_token => ({
     type: SET_API_TOKEN,

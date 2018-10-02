@@ -5,13 +5,15 @@ import {
     SET_SELECTED_LIST,
     DELETE_TODO,
     ADD_TODO,
+    SET_API_TOKEN,
     getList,
 } from './actions';
 
 /** Todo Store **/
 const todoInitialState = fromJS({
     meta: {
-        selected: ''
+        selected: '',
+        api_token: null
     },
     lists: [
         {
@@ -25,6 +27,13 @@ const todoInitialState = fromJS({
 
 export const todoReducer = function (state = todoInitialState, action) {
     switch (action.type) {
+        case SET_API_TOKEN:
+            return state.mergeDeep({
+                meta: {
+                    api_token: action.api_token
+                }
+            });
+
         case SET_SELECTED_LIST:
             return state.mergeDeep({
                 meta: {

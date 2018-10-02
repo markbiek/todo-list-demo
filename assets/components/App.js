@@ -1,17 +1,16 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { connect } from 'react-redux';
 
 import store from '../store';
 
-import TodoLists from './TodoLists';
+import Home from './Home';
 
 export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
                 <>
-                    <TodoLists />
+                    <Home />
                 </>
             </Provider>
         );

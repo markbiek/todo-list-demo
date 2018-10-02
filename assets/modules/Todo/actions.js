@@ -6,6 +6,19 @@ export const ADD_LIST = 'ADD_LIST';
 export const SET_SELECTED_LIST = 'SET_SELECTED_LIST';
 export const DELETE_TODO = 'DELETE_TODO';
 export const ADD_TODO = 'ADD_TODO';
+export const LOGIN_START = 'LOGIN_START';
+export const SET_API_TOKEN = 'SET_API_TOKEN';
+
+export const actionSetApiToken = api_token => ({
+    type: SET_API_TOKEN,
+    api_token
+});
+
+export const actionLoginStart = (username, password) => ({
+    type: LOGIN_START,
+    username,
+    password
+});
 
 export const actionAddList = name => ({
     type: ADD_LIST,

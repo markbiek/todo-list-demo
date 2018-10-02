@@ -3,18 +3,32 @@ import { connect } from 'react-redux';
 
 import store from '../store';
 
+import {
+    LOGIN_IN_PROGRESS,
+    LOGIN_SUCCESS,
+    LOGIN_FAILED,
+} from '../modules/Todo/actions';
+
 import TodoLists from './TodoLists';
 import Login from './Login';
 
 class Home extends React.Component {
     checkAuth() {
-        const { api_token } = this.props
+        const { login: { status, err } } = this.props;
 
-        if (!api_token) {
-            return <Login />;
-        } else {
+        if (status == LOGIN_IN_PROGRESS) {
+            return <p>Logging in...</p>;
+        }
+
+        if (status == LOGIN_FAILED) {
+            return <p className="error">({err})</p>;
+        }
+
+        if (status == LOGIN_SUCCESS) {
             return <TodoLists />;
         }
+
+        return <Login />;
     }
 
     render() {
@@ -28,7 +42,7 @@ class Home extends React.Component {
 
 const mapStateToProps = function (store) {
     return {
-        api_token: store.todoState.get('meta').get('api_token'),
+        login: store.todoState.get('meta').get('login').toJS(),
     }
 };
 

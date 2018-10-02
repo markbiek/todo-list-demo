@@ -6,6 +6,10 @@ import {
     DELETE_TODO,
     ADD_TODO,
     SET_API_TOKEN,
+    LOGIN_START,
+    LOGIN_IN_PROGRESS,
+    LOGIN_SUCCESS,
+    LOGIN_FAILED,
     getList,
 } from './actions';
 
@@ -13,6 +17,10 @@ import {
 const todoInitialState = fromJS({
     meta: {
         selected: '',
+        login: {
+            status: null,
+            err: null,
+        },
         api_token: null
     },
     lists: [
@@ -27,6 +35,19 @@ const todoInitialState = fromJS({
 
 export const todoReducer = function (state = todoInitialState, action) {
     switch (action.type) {
+        case LOGIN_START:
+        case LOGIN_IN_PROGRESS:
+        case LOGIN_FAILED:
+        case LOGIN_SUCCESS:
+            return state.mergeDeep({
+                meta: {
+                    login: {
+                        status: action.type,
+                        err: action.hasOwnProperty('err') ? action.err : null
+                    }
+                }
+            });
+
         case SET_API_TOKEN:
             return state.mergeDeep({
                 meta: {
